@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
 import RestaurantList from './components/RestaurantList';
 import RestaurantCreate from './components/RestaurantCreate';
@@ -12,13 +11,13 @@ function App() {
     <Router>
       <div className="App">
         <Navigation />
-        <Switch>
-          <Route exact path="/" component={RestaurantList} />
-          <Route exact path="/restaurants/create" component={RestaurantCreate} />
-          <Route exact path="/restaurants/:id" component={RestaurantDetails} />
-          <Route exact path="/restaurants/:id/edit" component={RestaurantUpdate} />
-          <Route exact path="/restaurants/:id/delete" component={RestaurantDelete} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<RestaurantList />} />
+          <Route path="/restaurants/create" element={<RestaurantCreate />} />
+          <Route path="/restaurant/:id" element={<RestaurantDetails />} />
+          <Route path="/restaurants/:id/edit" element={<RestaurantUpdate />} />
+          <Route path="/restaurants/:id/delete" element={<RestaurantDelete />} />
+        </Routes>
       </div>
     </Router>
   );

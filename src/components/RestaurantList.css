@@ -1,0 +1,17 @@
+.restaurant-card {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+}
+
+.restaurant-title {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 8px;
+    list-style-type: none;
+}
+
+.restaurant-info {
+    color: #888;
+}
