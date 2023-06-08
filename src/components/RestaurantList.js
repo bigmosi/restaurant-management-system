@@ -9,12 +9,16 @@ function RestaurantList() {
   useEffect(() => {
     axios.get('http://localhost:8080/restaurants/')
       .then((response) => {
-        setRestaurants(response.data);
+        setRestaurants(response.data.map(((product) => ({ ...product, id: product._id }))));
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
+  if (restaurants.length === 0) {
+    return <h3>Empty Restaurant Lists</h3>;
+  }
 
   return (
     <div className="restaurant-list">

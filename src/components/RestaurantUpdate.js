@@ -1,68 +1,80 @@
 // RestaurantUpdate.js
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 
-function RestaurantUpdate() {
-  const { id } = useParams();
-  const [name, setName] = useState('');
-  const [cuisineType, setCuisineType] = useState('');
-  const [location, setLocation] = useState('');
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import axios from 'axios';
 
-  useEffect(() => {
-    fetch(`/api/restaurants/${id}`)
-      .then((response) => { response.json(); })
-      .then((data) => {
-        setName(data.name);
-        setCuisineType(data.cuisineType);
-        setLocation(data.location);
-      });
-  }, [id]);
+function RestaurantUpdate({ restaurant, onUpdate, onCancel }) {
+  const [updatedRestaurant, setUpdatedRestaurant] = useState(restaurant);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    fetch(`/api/restaurants/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ name, cuisineType, location }),
-    })
-      .then((response) => {
-        if (response.ok) {
-          // Handle successful update
-          console.log('Restaurant updated successfully');
-          // Perform any necessary actions or update the state
-        } else {
-          // Handle error response
-          throw new Error('Failed to update restaurant');
-        }
-      })
-      .catch((error) => {
-        // Handle error
-        console.error('Error updating restaurant:', error.message);
-        // Handle the error, display an error message, or perform any necessary actions
-      });
+  const handleChange = (e) => {
+    setUpdatedRestaurant({
+      ...updatedRestaurant,
+      [e.target.name]: e.target.value,
+    });
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(`http://localhost:8080/restaurants/${restaurant.id}`, updatedRestaurant);
+      onUpdate(updatedRestaurant);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleCancel = () => {
+    onCancel();
+  };
+
   return (
     <div>
       <h2>Update Restaurant</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">
-          Name:
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <label htmlFor="cusineType">
-          Cuisine Type:
-          <input type="text" value={cuisineType} onChange={(e) => setCuisineType(e.target.value)} />
-        </label>
-        <label htmlFor="location">
-          Location:
-          <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} />
-        </label>
+        <div>
+          <input
+            type="text"
+            name="name"
+            id="name" // Add unique id
+            value={updatedRestaurant.name}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="cuisineType"
+            id="cuisineType" // Add unique id
+            value={updatedRestaurant.cuisineType}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="location"
+            id="location" // Add unique id
+            value={updatedRestaurant.location}
+            onChange={handleChange}
+          />
+        </div>
         <button type="submit">Update</button>
+        <button type="button" onClick={handleCancel}>Cancel</button>
       </form>
     </div>
   );
 }
+
+RestaurantUpdate.propTypes = {
+  restaurant: PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    cuisineType: PropTypes.string.isRequired,
+    location: PropTypes.string.isRequired,
+  }).isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  onCancel: PropTypes.func.isRequired,
+};
 
 export default RestaurantUpdate;
