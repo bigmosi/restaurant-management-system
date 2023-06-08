@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -45,6 +46,7 @@ function RestaurantCreate() {
   const [cuisineType, setCuisineType] = useState('');
   const [location, setLocation] = useState('');
   const [image, setImage] = useState(null);
+  const navigate = useNavigate();
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -57,10 +59,11 @@ function RestaurantCreate() {
     formData.append('name', name);
     formData.append('cuisineType', cuisineType);
     formData.append('location', location);
-    formData.append('image', image); // Append the image file to the formData
+    formData.append('image', image);
     axios.post('http://localhost:8080/restaurants', formData)
       .then((data) => {
         console.log('Restaurant created:', data);
+        navigate('/');
       })
       .catch((error) => {
         console.error('Error creating restaurant:', error);

@@ -1,0 +1,40 @@
+.restaurant-details {
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .restaurant-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .restaurant-details p {
+    margin-bottom: 5px;
+  }
+  
+  .restaurant-details img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .restaurant-details button {
+    margin-right: 10px;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .restaurant-details button:hover {
+    background-color: #2980b9;
+  }
+
+  .loading-indication {
+    text-align: center;
+  }
+  

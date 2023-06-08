@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import RestaurantUpdate from './RestaurantUpdate';
+import './RestaurantDetails.css';
 
 function RestaurantDetails() {
   const [restaurant, setRestaurant] = useState(null);
@@ -21,7 +22,6 @@ function RestaurantDetails() {
 
     fetchRestaurantDetails();
   }, [id]);
-
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8080/restaurants/${id}`);
@@ -43,13 +43,12 @@ function RestaurantDetails() {
     setIsUpdateOpen(false);
   };
 
-  // Add conditional rendering for when restaurant is null or still being fetched
   if (restaurant === null) {
-    return <p>Loading restaurant details...</p>;
+    return <p className="loading-indication">Loading restaurant details...</p>;
   }
 
   return (
-    <div>
+    <div className="restaurant-details">
       <div>
         <h2>
           {restaurant && restaurant.name}
@@ -63,8 +62,7 @@ function RestaurantDetails() {
           {restaurant && restaurant.location}
         </p>
         <p>
-          Image:
-          {restaurant && <img src={restaurant.image} alt={restaurant.name} />}
+          {restaurant && <img src={`http://localhost:8080/uploads/${restaurant.image}`} alt={restaurant.name} />}
         </p>
         <button onClick={handleUpdate} type="button">Update</button>
         <button onClick={handleDelete} type="button">Delete</button>

@@ -9,7 +9,7 @@ function RestaurantList() {
   useEffect(() => {
     axios.get('http://localhost:8080/restaurants/')
       .then((response) => {
-        setRestaurants(response.data.map(((product) => ({ ...product, id: product._id }))));
+        setRestaurants(response.data);
       })
       .catch((error) => {
         console.error(error);
@@ -17,19 +17,27 @@ function RestaurantList() {
   }, []);
 
   if (restaurants.length === 0) {
-    return <h3>Empty Restaurant Lists</h3>;
+    return <h3 className="empty-lists">Empty Restaurant Lists</h3>;
   }
 
   return (
-    <div className="restaurant-list">
-      <h2>Restaurant List</h2>
-      <ul className="restaurant-card">
-        {restaurants.map((restaurant) => (
-          <li key={restaurant.id} className="restaurant-title">
-            <Link to={`/restaurant/${restaurant.id}`} className="restaurant-info">{restaurant.name}</Link>
-          </li>
-        ))}
-      </ul>
+    <div className="restaurant-container">
+      <div className="restaurant-list">
+        <h2>Restaurant Lists</h2>
+        <ul className="restaurant-card">
+          {restaurants.map((restaurant) => (
+            <li key={restaurant.id} className="restaurant-title">
+              <div className="description">
+                <Link to={`/restaurant/${restaurant.id}`} className="restaurant-info">{restaurant.name}</Link>
+                <p>{restaurant.location}</p>
+              </div>
+              {restaurant.image && (
+                <img src={`http://localhost:8080/uploads/${restaurant.image}`} alt={restaurant.name} className="restaurant-image" />
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
