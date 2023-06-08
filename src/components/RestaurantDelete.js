@@ -5,7 +5,7 @@ function RestaurantDelete() {
   const { id } = useParams();
 
   const handleDelete = () => {
-    fetch(`/api/restaurants/${id}`, {
+    fetch(`/restaurants/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {

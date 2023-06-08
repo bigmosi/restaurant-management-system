@@ -44,14 +44,21 @@ function RestaurantCreate() {
   const [name, setName] = useState('');
   const [cuisineType, setCuisineType] = useState('');
   const [location, setLocation] = useState('');
+  const [image, setImage] = useState(null);
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    setImage(file);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('http://localhost:8080/api/restaurants', {
-      name,
-      cuisineType,
-      location,
-    })
+
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('cuisineType', cuisineType);
+    formData.append('location', location);
+    formData.append('image', image); // Append the image file to the formData
+    axios.post('http://localhost:8080/restaurants', formData)
       .then((data) => {
         console.log('Restaurant created:', data);
       })
@@ -75,6 +82,10 @@ function RestaurantCreate() {
         <InputGroup>
           <Label>Location:</Label>
           <Input type="text" name="location" value={location} onChange={(e) => setLocation(e.target.value)} />
+        </InputGroup>
+        <InputGroup>
+          <Label>Upload Image:</Label>
+          <Input type="file" name="image" onChange={handleImageUpload} />
         </InputGroup>
         <Button type="submit">Create Restaurant</Button>
       </Form>

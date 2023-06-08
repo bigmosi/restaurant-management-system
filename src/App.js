@@ -1,4 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Routes, Route, useParams,
+} from 'react-router-dom';
 import Navigation from './components/Navigation';
 import RestaurantList from './components/RestaurantList';
 import RestaurantCreate from './components/RestaurantCreate';
@@ -7,6 +9,8 @@ import RestaurantUpdate from './components/RestaurantUpdate';
 import RestaurantDelete from './components/RestaurantDelete';
 
 function App() {
+  const { id } = useParams();
+
   return (
     <Router>
       <div className="App">
@@ -14,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<RestaurantList />} />
           <Route path="/restaurants/create" element={<RestaurantCreate />} />
-          <Route path="/restaurant/:id" element={<RestaurantDetails />} />
+          <Route path="/restaurant/:id" element={<RestaurantDetails id={id} />} />
           <Route path="/restaurants/:id/edit" element={<RestaurantUpdate />} />
           <Route path="/restaurants/:id/delete" element={<RestaurantDelete />} />
         </Routes>
