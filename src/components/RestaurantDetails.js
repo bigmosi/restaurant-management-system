@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import RestaurantUpdate from './RestaurantUpdate';
 import './RestaurantDetails.css';
@@ -9,6 +9,7 @@ function RestaurantDetails() {
   const [restaurant, setRestaurant] = useState(null);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRestaurantDetails = async () => {
@@ -25,6 +26,7 @@ function RestaurantDetails() {
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:8080/restaurants/${id}`);
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
