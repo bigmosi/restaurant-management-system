@@ -1,70 +1,117 @@
-# Getting Started with Create React App
+Restaurant Management System
+This is a Restaurant Management System application that allows users to manage restaurants, their details, and perform various operations.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Table of Contents
+Installation
+Backend Setup
+Frontend Setup
+Running the Application
+Running Unit Tests
+Additional Dependencies
+Installation
+To get started with the Restaurant Management System application, follow these steps:
 
-## Available Scripts
+Clone the repository:
 
-In the project directory, you can run:
+bash
+Copy code
+git clone https://github.com/your-username/restaurant-management-system.git
+Navigate to the project directory:
 
-### `npm start`
+bash
+Copy code
+cd restaurant-management-system
+Install the dependencies:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+bash
+Copy code
+npm install
+Backend Setup
+The backend server and database need to be set up before running the application.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Navigate to the backend directory:
 
-### `npm test`
+bash
+Copy code
+cd backend
+Install the backend dependencies:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+bash
+Copy code
+npm install
+Configure the database connection:
 
-### `npm run build`
+Open the .env file and set the appropriate values for the database connection parameters.
+Set up the database:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Run the database migrations:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+bash
+Copy code
+npm run migrate
+(Optional) Seed the database with sample data:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+bash
+Copy code
+npm run seed
+Start the backend server:
 
-### `npm run eject`
+bash
+Copy code
+npm start
+The backend server will be running at http://localhost:8080.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Frontend Setup
+The frontend of the application needs to be set up and connected to the backend server.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Navigate to the frontend directory:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+bash
+Copy code
+cd frontend
+Install the frontend dependencies:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+bash
+Copy code
+npm install
+Configure the backend server URL:
 
-## Learn More
+Open the .env file and set the value for REACT_APP_API_URL to the URL where the backend server is running (e.g., http://localhost:8080).
+Running the Application
+To run the Restaurant Management System application, follow these steps:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Start the backend server (if not already running):
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Open a new terminal window.
+Navigate to the backend directory: cd backend.
+Start the backend server: npm start.
+Start the frontend development server:
 
-### Code Splitting
+Open a new terminal window.
+Navigate to the frontend directory: cd frontend.
+Start the frontend development server: npm start.
+The application will open in your browser at http://localhost:3000.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Running Unit Tests
+To run the unit tests for the Restaurant Management System application, follow these steps:
 
-### Analyzing the Bundle Size
+Navigate to the project root directory (if not already there).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Run the unit tests:
 
-### Making a Progressive Web App
+bash
+Copy code
+npm test
+The test results will be displayed in the console.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Additional Dependencies
+The Restaurant Management System application has the following additional dependencies:
 
-### Advanced Configuration
+react-router-dom: Used for routing within the frontend application.
+axios: Used for making HTTP requests from the frontend to the backend server.
+styled-components: Used for styling the frontend components.
+To install these dependencies, run the following command in the project root directory:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+bash
+Copy code
+npm install react-router-dom axios styled-components
