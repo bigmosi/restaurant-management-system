@@ -4,10 +4,12 @@ import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import RestaurantUpdate from './RestaurantUpdate';
 import './RestaurantDetails.css';
+import ConfirmationDailog from './ConfirmDialog';
 
 function RestaurantDetails() {
   const [restaurant, setRestaurant] = useState(null);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -23,12 +25,16 @@ function RestaurantDetails() {
 
     fetchRestaurantDetails();
   }, [id]);
+
   const handleDelete = async () => {
-    try {
-      await axios.delete(`http://localhost:8080/restaurants/${id}`);
-      navigate('/');
-    } catch (error) {
-      console.error('Error deleting restaurant', error);
+    const confirmDelete = window.confirm('Are you sure you want to delete this restaurant?');
+    if (confirmDelete) {
+      try {
+        await axios.delete(`http://localhost:8080/restaurants/${id}`);
+        navigate('/');
+      } catch (error) {
+        console.error('Error deleting restaurant', error);
+      }
     }
   };
 
@@ -43,6 +49,19 @@ function RestaurantDetails() {
 
   const handleUpdateCancel = () => {
     setIsUpdateOpen(false);
+  };
+
+  const handleConfirmation = () => {
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmDelete = () => {
+    setShowConfirmation(false);
+    handleDelete();
+  };
+
+  const handleCancelDelete = () => {
+    setShowConfirmation(false);
   };
 
   if (restaurant === null) {
@@ -67,17 +86,22 @@ function RestaurantDetails() {
           {restaurant && <img src={`http://localhost:8080/uploads/${restaurant.image}`} alt={restaurant.name} />}
         </p>
         <button onClick={handleUpdate} type="button">Update</button>
-        <button onClick={handleDelete} type="button">Delete</button>
-      </div>
-      {
-        isUpdateOpen && (
-          <RestaurantUpdate
-            restaurant={restaurant}
-            onUpdate={handleUpdateSubmit}
-            onCancel={handleUpdateCancel}
+        <button onClick={handleConfirmation} type="button">Delete</button>
+        {showConfirmation && (
+          <ConfirmationDailog
+            message="Are you sure you want to delete this restaurant?"
+            onConfirm={handleConfirmDelete}
+            onCancel={handleCancelDelete}
           />
-        )
-      }
+        )}
+      </div>
+      {isUpdateOpen && (
+        <RestaurantUpdate
+          restaurant={restaurant}
+          onUpdate={handleUpdateSubmit}
+          onCancel={handleUpdateCancel}
+        />
+      )}
     </div>
   );
 }

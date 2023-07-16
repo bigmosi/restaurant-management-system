@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './RestaurantList.css';
+import Spinner from './Spinner';
 
 function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
@@ -17,7 +18,7 @@ function RestaurantList() {
   }, []);
 
   if (restaurants.length === 0) {
-    return <h3 className="empty-lists">Empty Restaurant Lists</h3>;
+    return <Spinner />;
   }
 
   return (
