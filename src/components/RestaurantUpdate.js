@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import axios from 'axios';
+import { useParams } from 'react-router';
 
 function RestaurantUpdate({ restaurant, onUpdate, onCancel }) {
   const [updatedRestaurant, setUpdatedRestaurant] = useState(restaurant);
+  const { id } = useParams();
 
   const handleChange = (e) => {
     setUpdatedRestaurant({
@@ -12,10 +14,26 @@ function RestaurantUpdate({ restaurant, onUpdate, onCancel }) {
     });
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    setUpdatedRestaurant((updatedRestaurant) => ({
+      ...updatedRestaurant,
+      image: file,
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:8080/restaurants/${restaurant.id}`, updatedRestaurant);
+      const formData = new FormData();
+      formData.append('image', updatedRestaurant.image);
+
+      await axios.put(`http://localhost:8080/restaurants/${id}`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       onUpdate(updatedRestaurant);
     } catch (error) {
       console.error(error);
@@ -34,7 +52,7 @@ function RestaurantUpdate({ restaurant, onUpdate, onCancel }) {
           <input
             type="text"
             name="name"
-            id="name" // Add unique id
+            id="name"
             value={updatedRestaurant.name}
             onChange={handleChange}
           />
@@ -43,7 +61,7 @@ function RestaurantUpdate({ restaurant, onUpdate, onCancel }) {
           <input
             type="text"
             name="cuisineType"
-            id="cuisineType" // Add unique id
+            id="cuisineType"
             value={updatedRestaurant.cuisineType}
             onChange={handleChange}
           />
@@ -52,10 +70,13 @@ function RestaurantUpdate({ restaurant, onUpdate, onCancel }) {
           <input
             type="text"
             name="location"
-            id="location" // Add unique id
+            id="location"
             value={updatedRestaurant.location}
             onChange={handleChange}
           />
+        </div>
+        <div>
+          <input type="file" name="image" onChange={handleImageUpload} />
         </div>
         <button type="submit">Update</button>
         <button type="button" onClick={handleCancel}>Cancel</button>

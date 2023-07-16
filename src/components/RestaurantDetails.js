@@ -28,7 +28,7 @@ function RestaurantDetails() {
       await axios.delete(`http://localhost:8080/restaurants/${id}`);
       navigate('/');
     } catch (error) {
-      console.error(error);
+      console.error('Error deleting restaurant', error);
     }
   };
 
