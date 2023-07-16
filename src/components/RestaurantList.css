@@ -1,0 +1,52 @@
+.restaurant-container {
+    display: flex;
+    justify-content: center;
+}
+
+.restaurant-list {
+    margin: 20px;
+  }
+  
+  .restaurant-list h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .restaurant-card {
+    list-style-type: none;
+    padding: 0;
+    width: 100vw;
+  }
+  
+  .restaurant-title {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+
+  }
+  
+  .restaurant-info {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .restaurant-info:hover {
+    text-decoration: underline;
+  }
+
+  .empty-lists {
+    text-align: center;
+  }
+
+  .restaurant-image {
+    width: 500px; 
+    height: 150px; 
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .description {
+    margin-right: 30px;
+  }
+  

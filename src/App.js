@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import {
+  BrowserRouter as Router, Routes, Route, useParams,
+} from 'react-router-dom';
+import Navigation from './components/Navigation';
+import RestaurantList from './components/RestaurantList';
+import RestaurantCreate from './components/RestaurantCreate';
+import RestaurantDetails from './components/RestaurantDetails';
+import RestaurantUpdate from './components/RestaurantUpdate';
+import RestaurantDelete from './components/RestaurantDelete';
 
 function App() {
+  const { id } = useParams();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<RestaurantList />} />
+          <Route path="/restaurants/create" element={<RestaurantCreate />} />
+          <Route path="/restaurant/:id" element={<RestaurantDetails id={id} />} />
+          <Route path="/restaurants/:id/edit" element={<RestaurantUpdate />} />
+          <Route path="/restaurants/:id/delete" element={<RestaurantDelete />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
