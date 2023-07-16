@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useParams, useNavigate } from 'react-router-dom';
+import { css } from '@emotion/react';
+import { ScaleLoader } from 'react-spinners';
 import axios from 'axios';
 import RestaurantUpdate from './RestaurantUpdate';
 import './RestaurantDetails.css';
@@ -10,6 +12,7 @@ function RestaurantDetails() {
   const [restaurant, setRestaurant] = useState(null);
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -18,8 +21,10 @@ function RestaurantDetails() {
       try {
         const { data } = await axios.get(`http://localhost:8080/restaurants/${id}`);
         setRestaurant(data);
+        setIsLoading(false);
       } catch (error) {
         console.error(error);
+        setIsLoading(false);
       }
     };
 
@@ -64,8 +69,18 @@ function RestaurantDetails() {
     setShowConfirmation(false);
   };
 
-  if (restaurant === null) {
-    return <p className="loading-indication">Loading restaurant details...</p>;
+  const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red
+  `;
+
+  if (isLoading) {
+    return (
+      <div className="spinner-container">
+        <ScaleLoader color="#36D7B7" css={override} loading={isLoading} size={120} />
+      </div>
+    );
   }
 
   return (
